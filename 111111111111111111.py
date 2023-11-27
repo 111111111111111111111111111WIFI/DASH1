@@ -48,3 +48,21 @@ app.layout = html.Div([
     [Input('time-period-dropdown', 'value')]
 )
 def update_charts(selected_time_period):
+    # Фильтрация и агрегация данных в соответствии с выбранным периодом
+    filtered_df = df.resample(selected_time_period, on='Transaction Date')['Quantity'].sum().reset_index()
+
+    # Проверка наличия данных после агрегации
+    if filtered_df.empty:
+        return dash.no_update  # Возвращает текущее состояние, если данные отсутствуют
+
+    # Линейный график
+    time_series_chart = px.line(filtered_df, x='Transaction Date', y='Quantity', title='Временной ряд')
+
+    # Круговая диаграмма
+    pie_chart = px.pie(df, names='Transaction Type', title='Распределение типов сделок')
+
+    # Гистограмма
+    histogram = px.histogram(df, x='Unit Price', title='Распределение цен за единицу')
+
+    # Точечный график
+    scatter_plot = px.scatter(df, x='Quantity', y='Unit Price', title='Корреляция между Количеством и Ценой за Единицу')
