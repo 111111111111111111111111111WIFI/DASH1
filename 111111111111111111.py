@@ -37,3 +37,14 @@ app.layout = html.Div([
     dcc.Graph(id='scatter-plot'),
     html.Div(id='data-table')
 ], style={'padding': '20px'})
+
+# Определение логики дашборда
+@app.callback(
+    Output('time-series-chart', 'figure'),
+    Output('pie-chart', 'figure'),
+    Output('histogram', 'figure'),
+    Output('scatter-plot', 'figure'),
+    Output('data-table', 'children'),
+    [Input('time-period-dropdown', 'value')]
+)
+def update_charts(selected_time_period):
