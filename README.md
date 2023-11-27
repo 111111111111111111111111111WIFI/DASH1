@@ -8,4 +8,4 @@ pip install dash-table==3.1.7 # Interactive DataTable component (new!)
 
 pip install pandas==<version_number> # Data manipulation and analysis
 
-# Visit https://dash.plotly.com/installation for checking the latest versions
+
