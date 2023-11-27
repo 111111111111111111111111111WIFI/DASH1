@@ -66,3 +66,27 @@ def update_charts(selected_time_period):
 
     # Точечный график
     scatter_plot = px.scatter(df, x='Quantity', y='Unit Price', title='Корреляция между Количеством и Ценой за Единицу')
+
+    # Таблица с данными, используя dash_table.DataTable
+    data_table = dash_table.DataTable(
+        columns=[{"name": i, "id": i} for i in df.columns],
+        data=df.to_dict('records'),
+        page_size=10,  # Количество строк на странице
+        style_table={'height': '300px', 'overflowY': 'auto'},
+        style_cell={
+            'textAlign': 'left',
+            'padding': '10px',
+            'minWidth': '100px', 'width': '100px', 'maxWidth': '100px',
+            'whiteSpace': 'normal'
+        },
+        style_header={
+            'backgroundColor': 'rgb(230, 230, 230)',
+            'fontWeight': 'bold'
+        }
+    )
+
+    return time_series_chart, pie_chart, histogram, scatter_plot, data_table
+
+# Запуск приложения
+if __name__ == '__main__':
+    app.run_server(debug=True)
